@@ -1,0 +1,20 @@
+{
+    "username": {
+        "marisaoj": "hungg261",
+        "vnoj": "hungg_261",
+        "cses": "hungg261",
+        "codeforces": "hungg261"
+    },
+    "oj": {
+        "marisaoj": "D:/PTHung/Programming/CP/Problems/OnlineJudges/marisaoj-solutions/marisaoj-solutions",
+        "vnoj": "D:/PTHung/Programming/CP/Problems/OnlineJudges/vnoj-solutions/vnoj-solutions",
+        "cses": "D:/PTHung/Programming/CP/Problems/OnlineJudges/cses-solutions/cses-solutions",
+        "codeforces": "D:/PTHung/Programming/CP/Problems/OnlineJudges/codeforces-solutions/codeforces-solutions"
+    },
+    "oj_patterns": {
+        "marisaoj": ["marisa"],
+        "cses": ["cses"],
+        "vnoj": ["vnoi"],
+        "codeforces": ["codeforces"]
+    }
+}
