@@ -100,7 +100,7 @@ if __name__ == "__main__":
         
     
     if args.command == "open":
-        os.startfile(CONFIG["oj"][args.open.lower()])
+        subprocess.run("explorer /n, \"{}\"".format(os.path.abspath(CONFIG["oj"][args.open.lower()])), shell=True)
         os._exit(0)
 
     print("Link:", args.link)
