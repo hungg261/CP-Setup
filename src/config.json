@@ -9,7 +9,8 @@
         "marisaoj": "D:/PTHung/Programming/CP/Problems/OnlineJudges/marisaoj-solutions/marisaoj-solutions",
         "vnoj": "D:/PTHung/Programming/CP/Problems/OnlineJudges/vnoj-solutions/vnoj-solutions",
         "cses": "D:/PTHung/Programming/CP/Problems/OnlineJudges/cses-solutions/cses-solutions",
-        "codeforces": "D:/PTHung/Programming/CP/Problems/OnlineJudges/codeforces-solutions/codeforces-solutions"
+        "codeforces": "D:/PTHung/Programming/CP/Problems/OnlineJudges/codeforces-solutions/codeforces-solutions",
+        "ptnk": "D:/PTHung/Programming/CP/Problems/School/baitap-PTNK/Solutions/Solutions/Lessons"
     },
     "oj_patterns": {
         "marisaoj": ["marisa"],

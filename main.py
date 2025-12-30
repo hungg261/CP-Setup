@@ -6,31 +6,40 @@ import argparse
 import os
 
 def parse_args():
-    parser = argparse.ArgumentParser()
-
-    # positional argument
-    parser.add_argument(
-        "link",
-        help="Codeforces problem link"
+    parser = argparse.ArgumentParser(
+        description="CP Setup tool"
     )
 
-    # optional arguments
-    parser.add_argument(
+    subparsers = parser.add_subparsers(dest="command", required=True)
+
+    # generate
+    gen_parser = subparsers.add_parser("generate", help="Generate a new CP file")
+    gen_parser.add_argument(
+        "link",
+        help="Codeforces problem link or other OJ link"
+    )
+    gen_parser.add_argument(
         "-u", "--username",
         default=None,
         help="Optional username"
     )
-
-    parser.add_argument(
+    gen_parser.add_argument(
         "-e", "--extension",
         default="cpp",
         help="File extension (default: cpp)"
     )
-    
-    parser.add_argument(
+    gen_parser.add_argument(
         "-t", "--target",
         default="default",
-        help="File extension (default: cpp)"
+        help="Target template (default: default)"
+    )
+
+    # open
+    open_parser = subparsers.add_parser("open", help="Open a file or folder")
+    open_parser.add_argument(
+        "-o", "--open",
+        required=True,
+        help="Path to file or folder to open"
     )
 
     return parser.parse_args()
@@ -89,6 +98,10 @@ if __name__ == "__main__":
     except SystemExit:
         input("Invalid command, press [ENTER] to exit...")
         
+    
+    if args.command == "open":
+        os.startfile(CONFIG["oj"][args.open.lower()])
+        os._exit(0)
 
     print("Link:", args.link)
     print("Username:", args.username)
