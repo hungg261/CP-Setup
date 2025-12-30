@@ -1,6 +1,12 @@
 from src.parser import OJ, CONFIG
-import argparse
+
 from datetime import datetime
+import subprocess
+import argparse
+import os
+
+script_dir = os.path.dirname(os.path.abspath(__file__))
+os.chdir(script_dir)
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -31,6 +37,18 @@ def parse_args():
     )
 
     return parser.parse_args()
+
+def open_and_highlight(filepath):
+    abs_path = os.path.abspath(filepath)
+    command = f'explorer /select,"{abs_path}"'
+    
+    try:
+        subprocess.run(command, shell=True)
+        print(f"Opened Explorer and highlighted: {abs_path}")
+    except FileNotFoundError:
+        print("Error: Windows Explorer not found.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
 def Generate(args):
     oj = OJ(args.username)
@@ -65,6 +83,7 @@ def Generate(args):
     with open(output_file, "w") as newFile:
         newFile.write(content)
 
+    open_and_highlight(output_file)
     print(f"Generated {output_file}")
     
 

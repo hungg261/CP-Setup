@@ -1,7 +1,11 @@
-import json
 from .parsers import codeforces, cses, marisaoj, vnoj
 
+import json
+import os
+
 def load_config(path = "src/config.json"):
+    print(os.getcwd())
+    
     try:
         with open(path, "r", encoding="utf-8") as f:
             return json.load(f)
