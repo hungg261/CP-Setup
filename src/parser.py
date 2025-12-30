@@ -1,5 +1,5 @@
 import json
-from parsers import codeforces, cses, marisaoj, vnoj
+from .parsers import codeforces, cses, marisaoj, vnoj
 
 def load_config(path = "src/config.json"):
     try:

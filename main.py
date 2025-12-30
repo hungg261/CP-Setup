@@ -1,4 +1,4 @@
-from parser import OJ
+from src.parser import OJ, CONFIG
 import argparse
 from datetime import datetime
 
@@ -23,17 +23,16 @@ def parse_args():
         default="cpp",
         help="File extension (default: cpp)"
     )
+    
+    parser.add_argument(
+        "-t", "--target",
+        default="default",
+        help="File extension (default: cpp)"
+    )
 
     return parser.parse_args()
 
-
-if __name__ == "__main__":
-    args = parse_args()
-
-    print("Link:", args.link)
-    print("Username:", args.username)
-    print("Extension:", args.extension)
-    
+def Generate(args):
     oj = OJ(args.username)
     oj.init(args.link)
     
@@ -43,9 +42,10 @@ if __name__ == "__main__":
         "id": oj.oj.id
     }
 
-    with open("src/templates/setup1.txt", "r") as file:
+    with open(f"src/templates/{args.target}.txt", "r") as file:
         template = file.read()
         
+    # format {}
     placeholders = ["username", "link", "id"]
     for key in placeholders:
         template = template.replace(f"{{{key}}}", f"__PLACEHOLDER_{key}__")
@@ -55,11 +55,31 @@ if __name__ == "__main__":
     for key in placeholders:
         template = template.replace(f"__PLACEHOLDER_{key}__", f"{{{key}}}")
 
+    # format template
     content = template.format(**formatter)
     content = datetime.now().strftime(content)
 
-    output_file = f"src/{oj.oj.id}.{args.extension}"
+    # output
+    output_folder = CONFIG["oj"][oj.oj.name.lower()]
+    output_file = output_folder + f"/{oj.oj.id}.{args.extension}"
     with open(output_file, "w") as newFile:
         newFile.write(content)
 
     print(f"Generated {output_file}")
+    
+
+if __name__ == "__main__":
+    try:
+        args = parse_args()
+    except SystemExit:
+        input("Invalid command, press [ENTER] to exit...")
+        
+
+    print("Link:", args.link)
+    print("Username:", args.username)
+    print("Extension:", args.extension)
+    print("Target templates:", args.target)
+    
+    Generate(args)
+    
+    input("Press [ENTER] to exit...")
