@@ -5,9 +5,6 @@ import subprocess
 import argparse
 import os
 
-script_dir = os.path.dirname(os.path.abspath(__file__))
-os.chdir(script_dir)
-
 def parse_args():
     parser = argparse.ArgumentParser()
 

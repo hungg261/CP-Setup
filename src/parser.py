@@ -15,6 +15,9 @@ def load_config(path = "src/config.json"):
         print(f"{path} is not valid JSON")
     return None
     
+script_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+os.chdir(script_dir)
+
 CONFIG = load_config("src/config.json")
 
 def getOJ(link: str):
