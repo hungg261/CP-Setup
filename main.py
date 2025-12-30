@@ -41,7 +41,6 @@ def open_and_highlight(filepath):
     
     try:
         subprocess.run(command, shell=True)
-        print(f"Opened Explorer and highlighted: {abs_path}")
     except FileNotFoundError:
         print("Error: Windows Explorer not found.")
     except Exception as e:
