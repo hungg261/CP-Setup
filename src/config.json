@@ -17,7 +17,9 @@
         
         "cses": "D:/PTHung/Programming/CP/Problems/OnlineJudges/cses-solutions/cses-solutions",
         
-        "ptnk": "D:/PTHung/Programming/CP/Problems/School/baitap-PTNK/Solutions/Solutions/Lessons"
+        "ptnk": "D:/PTHung/Programming/CP/Problems/School/baitap-PTNK/Solutions/Solutions/Lessons",
+        "pset": "D:/PTHung/Programming/CP/Problems/School/baitap-PTNK/Problemset",
+        "ptnk-task": "D:/PTHung/Programming/CP/Problems/School/baitap-PTNK/Problemset"
     },
     "oj_patterns": {
         "marisaoj": ["marisa"],
