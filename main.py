@@ -13,7 +13,8 @@ def parse_args():
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     # generate
-    gen_parser = subparsers.add_parser("generate", help="Generate a new CP file")
+    gen_parser = subparsers.add_parser("generate", aliases=["gen"],
+                                       help="Generate a new CP file")
     gen_parser.add_argument(
         "link",
         help="Codeforces problem link or other OJ link"
@@ -35,7 +36,8 @@ def parse_args():
     )
 
     # open
-    open_parser = subparsers.add_parser("open", help="Open a file or folder")
+    open_parser = subparsers.add_parser("open",
+                                        help="Open a file or folder")
     open_parser.add_argument(
         "-o", "--open",
         required=True,
