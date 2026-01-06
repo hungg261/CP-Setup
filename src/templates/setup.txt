@@ -11,16 +11,16 @@ void solve(){
 }
 
 signed main(){
-	ios_base::sync_with_stdio(0); cin.tie(0);
-	//freopen("{id}.INP","r",stdin);
-	//freopen("{id}.OUT","w",stdout);
- 
-	int t = 1;
-	//cin >> t;
- 
-	while(t--){
-		solve();
-	}
- 
-	return 0;
+    ios_base::sync_with_stdio(0); cin.tie(0);
+    //freopen("{id}.INP","r",stdin);
+    //freopen("{id}.OUT","w",stdout);
+
+    int t = 1;
+    //cin >> t;
+
+    while(t--){
+        solve();
+    }
+
+    return 0;
 }
