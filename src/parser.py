@@ -1,4 +1,4 @@
-from .parsers import codeforces, cses, marisaoj, vnoj
+from .parsers import codeforces, cses, marisaoj, vnoj, atcoder, spoj, yosupo
 
 import json
 import os
@@ -51,6 +51,12 @@ class OJ:
                 self.oj = marisaoj.MarisaOJ()
             case "vnoj":
                 self.oj = vnoj.VNOJ()
+            case "atcoder":
+                self.oj = atcoder.AtCoder()
+            case "spoj":
+                self.oj = spoj.SPOJ()
+            case "yosupo":
+                self.oj = yosupo.Yosupo()
             case _:
                 return
         

@@ -1,5 +1,7 @@
-class VNOJ:
-    name = "VNOJ"
+import re
+
+class SPOJ:
+    name = "SPOJ"
 
     def __init__(self, username: str = None):
         self.username = username
@@ -13,17 +15,19 @@ class VNOJ:
         if link.endswith("/"):
             link = link[:-1]
 
-        if "oj.vnoi.info/problem/" not in link:
+        pattern = r"spoj\.com/problems/(?P<pid>[A-Z0-9_]+)"
+
+        match = re.search(pattern, link)
+        if not match:
             return False
 
-        pid = link.rsplit("/", 1)[-1]
-
+        pid = match.group("pid")
+        self.id = f"{pid}"
         self.link = link
-        self.id = pid
         return True
 
 
 if __name__ == "__main__":
-    user = VNOJ("hungg261")
-    user.parse("https://oj.vnoi.info/problem/nvnamson_duhanh")
+    user = SPOJ("hungg")
+    user.parse("https://www.spoj.com/problems/CLFLARR")
     print(user)

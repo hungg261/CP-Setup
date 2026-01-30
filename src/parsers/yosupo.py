@@ -1,5 +1,7 @@
-class VNOJ:
-    name = "VNOJ"
+import re
+
+class Yosupo:
+    name = "Yosupo"
 
     def __init__(self, username: str = None):
         self.username = username
@@ -13,17 +15,18 @@ class VNOJ:
         if link.endswith("/"):
             link = link[:-1]
 
-        if "oj.vnoi.info/problem/" not in link:
+        pattern = r"judge\.yosupo\.jp/problem/(?P<pid>[a-z0-9_]+)"
+
+        match = re.search(pattern, link)
+        if not match:
             return False
 
-        pid = link.rsplit("/", 1)[-1]
-
+        self.id = match.group("pid")
         self.link = link
-        self.id = pid
         return True
 
 
 if __name__ == "__main__":
-    user = VNOJ("hungg261")
-    user.parse("https://oj.vnoi.info/problem/nvnamson_duhanh")
+    user = Yosupo("hungg261")
+    user.parse("https://judge.yosupo.jp/problem/aho_corasick")
     print(user)

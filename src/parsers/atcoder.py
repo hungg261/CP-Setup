@@ -1,5 +1,5 @@
-class VNOJ:
-    name = "VNOJ"
+class AtCoder:
+    name = "AtCoder"
 
     def __init__(self, username: str = None):
         self.username = username
@@ -13,7 +13,7 @@ class VNOJ:
         if link.endswith("/"):
             link = link[:-1]
 
-        if "oj.vnoi.info/problem/" not in link:
+        if "atcoder.jp/contests/" not in link or "/tasks/" not in link:
             return False
 
         pid = link.rsplit("/", 1)[-1]
@@ -24,6 +24,6 @@ class VNOJ:
 
 
 if __name__ == "__main__":
-    user = VNOJ("hungg261")
-    user.parse("https://oj.vnoi.info/problem/nvnamson_duhanh")
+    user = AtCoder("hungg261")
+    user.parse("https://atcoder.jp/contests/abc357/tasks/abc357_f")
     print(user)
