@@ -89,15 +89,20 @@ def Generate(args):
     output_file = output_folder + f"/{oj.oj.id}.{args.extension}"
     
     if os.path.exists(output_file):
-        isReplaced = input(f"Error: {output_file} already exists! Do you want to replace it? (y/n): ")
-        if isReplaced.lower() != "y":
+        isReplaced = input(f"\n[!!!] File already exists! Do you want to replace it? (Y/N, case sensitive): ")
+        if isReplaced != "Y":
             return
     
     with open(output_file, "w") as newFile:
         newFile.write(content)
 
-    open_and_highlight(output_file)
     print(f"Generated {output_file}")
+    
+    isOpened = input("Do you want to open the file in Code::Blocks? (y/n): ")
+    if isOpened.lower() == "y":
+        subprocess.Popen([r"C:\Program Files\CodeBlocks\codeblocks.exe", output_file])
+    else:
+        open_and_highlight(output_file)
     
 
 if __name__ == "__main__":
@@ -117,5 +122,3 @@ if __name__ == "__main__":
     print("Target templates:", args.target)
     
     Generate(args)
-    
-    input("Press [ENTER] to exit...")
