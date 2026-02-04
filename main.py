@@ -87,6 +87,12 @@ def Generate(args):
     # output
     output_folder = CONFIG["oj"][oj.oj.name.lower()]
     output_file = output_folder + f"/{oj.oj.id}.{args.extension}"
+    
+    if os.path.exists(output_file):
+        isReplaced = input(f"Error: {output_file} already exists! Do you want to replace it? (y/n): ")
+        if isReplaced.lower() != "y":
+            return
+    
     with open(output_file, "w") as newFile:
         newFile.write(content)
 
