@@ -1,4 +1,5 @@
 from src.parser import OJ, CONFIG
+from src.utils import clean, open_and_highlight, commit_each
 
 from datetime import datetime
 import subprocess
@@ -40,22 +41,32 @@ def parse_args():
                                         help="Open a file or folder")
     open_parser.add_argument(
         "-o", "--open",
-        required=True,
+        required=False,
         help="Path to file or folder to open"
     )
-
-    return parser.parse_args()
-
-def open_and_highlight(filepath):
-    abs_path = os.path.abspath(filepath)
-    command = f'explorer /select,"{abs_path}"'
     
-    try:
-        subprocess.run(command, shell=True)
-    except FileNotFoundError:
-        print("Error: Windows Explorer not found.")
-    except Exception as e:
-        print(f"An error occurred: {e}")
+    open_parser.add_argument(
+        "-g", "--git",
+        required=False,
+        help="Path to file or folder to open in Git Bash"
+    )
+    
+    # git
+    git_parser = subparsers.add_parser("git",
+                                          help="Commit each changed .cpp and .py file separately")
+    git_parser.add_argument(
+        "-c", "--commit",
+        required=False,
+        help="Path to the commit target folder"
+    )
+    
+    git_parser.add_argument(
+        "-cl", "--clean",
+        required=False,
+        help="Path to the clean target folder"
+    )
+    
+    return parser.parse_args()
 
 def Generate(args):
     oj = OJ(args.username)
@@ -110,15 +121,67 @@ if __name__ == "__main__":
         args = parse_args()
     except SystemExit:
         input("Invalid command, press [ENTER] to exit...")
+        os._exit(1)
         
     
     if args.command == "open":
-        subprocess.run("explorer /n, \"{}\"".format(os.path.abspath(CONFIG["oj"][args.open.lower()])), shell=True)
-        os._exit(0)
+        oj_name = args.open or args.git
 
-    print("Link:", args.link)
-    print("Username:", args.username)
-    print("Extension:", args.extension)
-    print("Target templates:", args.target)
-    
-    Generate(args)
+        if not oj_name:
+            print("Error: No OJ specified")
+            os._exit(1)
+
+        oj_key = oj_name.lower()
+
+        if oj_key not in CONFIG["oj"]:
+            print(f"Error: Unknown OJ '{oj_name}'")
+            os.exit(1)
+
+        path = os.path.abspath(CONFIG["oj"][oj_key])
+
+        if args.git:
+            subprocess.Popen([
+                r"C:\Program Files\Git\git-bash.exe",
+                f"--cd={path}"
+            ])
+        else:
+            subprocess.run(
+                f'explorer /n,"{path}"',
+                shell=True
+            )
+
+        os._exit(0)
+        
+    elif args.command == "git":
+        if args.commit is None and args.clean is None:
+            print("Error: No commit or clean path specified")
+            os._exit(1)
+            
+        if args.clean is not None:
+            oj_key = args.clean.lower()
+            if oj_key not in CONFIG["oj"]:
+                print(f"Error: Unknown OJ '{args.clean}'")
+                os._exit(1)
+            
+            path = os.path.abspath(CONFIG["oj"][oj_key])
+            clean(path)
+            os._exit(0)
+            
+        oj_key = args.commit.lower()
+        if oj_key not in CONFIG["oj"]:
+            print(f"Error: Unknown OJ '{args.commit}'")
+            os._exit(1)
+        
+        path = os.path.abspath(CONFIG["oj"][oj_key])
+        print(path)
+        commit_each(path)
+    elif args.command in ["generate", "gen"]:
+        print("Link:", args.link)
+        print("Username:", args.username)
+        print("Extension:", args.extension)
+        print("Target templates:", args.target)
+        
+        Generate(args)
+    else:
+        print("Error: Unknown command")
+        os._exit(1)
