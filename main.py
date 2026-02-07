@@ -99,20 +99,22 @@ def Generate(args):
     output_folder = CONFIG["oj"][oj.oj.name.lower()]
     output_file = output_folder + f"/{oj.oj.id}.{args.extension}"
     
+    isReplaced = "Y"
     if os.path.exists(output_file):
         isReplaced = input(f"\n[!!!] File already exists! Do you want to replace it? (Y/N, case sensitive): ")
-        if isReplaced != "Y":
-            return
     
-    with open(output_file, "w") as newFile:
-        newFile.write(content)
-
-    print(f"Generated {output_file}")
+    if isReplaced == "Y":
+        with open(output_file, "w") as newFile:
+            newFile.write(content)
+        print(f"Generated {output_file}")
     
-    isOpened = input("Do you want to open the file in Code::Blocks? (y/n): ")
-    if isOpened.lower() == "y":
+    isOpened = input("""Choose your opening method\n")
+1. Open in Code::Blocks
+2. Open in Explorer
+Enter your choice (1 or 2): """)
+    if isOpened == "1":
         subprocess.Popen([r"C:\Program Files\CodeBlocks\codeblocks.exe", output_file])
-    else:
+    elif isOpened == "2":
         open_and_highlight(output_file)
     
 
