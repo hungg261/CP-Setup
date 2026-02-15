@@ -61,6 +61,12 @@ def parse_args():
     )
     
     git_parser.add_argument(
+        "-m", "--message",
+        required=False,
+        help="Commit message"
+    )
+    
+    git_parser.add_argument(
         "-cl", "--clean",
         required=False,
         help="Path to the clean target folder"
@@ -97,21 +103,36 @@ def Generate(args):
 
     # output
     output_folder = CONFIG["oj"][oj.oj.name.lower()]
-    output_file = output_folder + f"/{oj.oj.id}.{args.extension}"
+    output_fname = output_folder + f"/{oj.oj.id}"
+    output_file = output_fname + f".{args.extension}"
     
-    isReplaced = "Y"
+    handlingDupFile = "1"
     if os.path.exists(output_file):
-        isReplaced = input(f"\n[!!!] File already exists! Do you want to replace it? (Y/N, case sensitive): ")
+        handlingDupFile = input(f"""\n[!!!] File already exists!\n
+1. Replace
+2. Create new version
+3. Skip
+> """).strip()
     
-    if isReplaced == "Y":
+    if handlingDupFile == "1" or handlingDupFile == "2":
+        if handlingDupFile == "2":
+            fcounter = 2
+            output_fname += f"_v{fcounter}"
+            output_file = output_fname + f".{args.extension}"
+            
+            while os.path.exists(output_file):
+                output_file = output_file.replace(f"_v{fcounter}", f"_v{fcounter + 1}")
+                fcounter += 1
+        
         with open(output_file, "w") as newFile:
             newFile.write(content)
         print(f"Generated {output_file}")
-    
+                
     isOpened = input("""Choose your opening method\n")
 1. Open in Code::Blocks
 2. Open in Explorer
-Enter your choice (1 or 2): """)
+3. Don't open
+> """)
     if isOpened == "1":
         subprocess.Popen([r"C:\Program Files\CodeBlocks\codeblocks.exe", output_file])
     elif isOpened == "2":
@@ -176,7 +197,12 @@ if __name__ == "__main__":
         
         path = os.path.abspath(CONFIG["oj"][oj_key])
         print(path)
-        commit_each(path)
+        
+        if args.message is not None:
+            commit_each(path, str(args.message))
+        else:
+            commit_each(path)
+        
     elif args.command in ["generate", "gen"]:
         print("Link:", args.link)
         print("Username:", args.username)

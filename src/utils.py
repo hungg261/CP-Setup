@@ -1,5 +1,6 @@
 from pathlib import Path
 import subprocess
+import time
 import os
 
 def open_and_highlight(filepath):
@@ -56,7 +57,7 @@ def clean(path):
         check=True
     )
 
-def commit_each(path):
+def commit_each(path, msg: str = "Auto group commit"):
     path = Path(path).resolve()
 
     result = subprocess.run(
@@ -83,12 +84,13 @@ def commit_each(path):
 
     committed = False
     
+    print(f"* Commit message: {msg}")
     print(f"Found {len(files)} changed .cpp/.py files:")
     for file in files:
         print(f"[*] {file}")
     print()
         
-    isProceed = input("Proceed to commit each separately? (y/n): ")
+    isProceed = input(f"Proceed to commit each separately? (y/n): ")
     if isProceed.lower() != "y":
         print("Aborted committing files.")
         return
@@ -97,7 +99,7 @@ def commit_each(path):
         subprocess.run(["git", "add", file], cwd=path, check=True)
 
         commit = subprocess.run(
-            ["git", "commit", "-m", f"Auto commit"],
+            ["git", "commit", "-m", f"{msg} (id={time.strftime('%d%m-%H%M%S')})"],
             cwd=path
         )
 
